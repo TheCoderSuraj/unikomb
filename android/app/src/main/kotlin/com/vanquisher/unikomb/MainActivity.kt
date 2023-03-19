@@ -1,4 +1,4 @@
-package com.example.unikomb
+package com.vanquisher.unikomb
 
 import io.flutter.embedding.android.FlutterActivity
 

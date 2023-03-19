@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "611793272527",
+    "project_id": "unikomb1",
+    "storage_bucket": "unikomb1.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:611793272527:android:4a3936b5db0b0978b5c1ba",
+        "android_client_info": {
+          "package_name": "com.vanquisher.unikomb"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "611793272527-3eo6nvb7s7pr0rg0ehue03ion2mntvlb.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCk1mg55IJBjdj5X7CMBB2QCyEAJg2ft3s"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "611793272527-3eo6nvb7s7pr0rg0ehue03ion2mntvlb.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "611793272527-4jen7632gak91ua84k1jdebsu8l8r5oh.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.unikomb"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,11 +1,20 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:unikomb/core/auth/screens/additional_details_screen.dart';
 import 'package:unikomb/utils/route_generator.dart';
 
 import 'core/general/providers/shared_pref_provider.dart';
 import 'core/general/screens/splash_screen.dart';
+import 'firebase_options.dart';
 
-void main() {
+void main() async {
+  // initializing other services before calling app
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+
   // to call application to run first time
   runApp(
     // initialize all providers
@@ -41,7 +50,7 @@ class _UniKombAppState extends State<UniKombApp> {
     return MaterialApp(
       onGenerateRoute: RouteGenerator.generateRoute,
       // initialRoute: HomeScreen.id,
-      initialRoute: SplashScreen.id,
+      initialRoute: AdditionalDetailsScreen.id,
     );
   }
 }

@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:unikomb/core/auth/screens/additional_details_screen.dart';
 import '../core/auth/screens/email_verification_screen.dart';
 import '../core/auth/screens/forget_password_screen.dart';
 import '../core/auth/screens/login_screen.dart';
+import '../core/auth/screens/signup_screen.dart';
 import '../core/general/screens/error_screen.dart';
 import '../core/general/screens/on_boarding_screen.dart';
 import '../core/general/screens/splash_screen.dart';
@@ -13,9 +15,17 @@ class RouteGenerator {
     switch (settings.name) {
       // Auth
 
+      case AdditionalDetailsScreen.id:
+        return MaterialPageRoute(
+          builder: (context) => const AdditionalDetailsScreen(),
+        );
       case LoginScreen.id:
         return MaterialPageRoute(
           builder: (context) => const LoginScreen(),
+        );
+      case SignUpScreen.id:
+        return MaterialPageRoute(
+          builder: (context) => const SignUpScreen(),
         );
       case ForgetPasswordScreen.id:
         return MaterialPageRoute(
