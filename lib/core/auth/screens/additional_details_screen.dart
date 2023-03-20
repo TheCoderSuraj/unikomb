@@ -201,6 +201,7 @@ class _AdditionalDetailsScreenState extends State<AdditionalDetailsScreen> {
                             _nameController.text,
                             _uidController.text,
                             url,
+                            _courseController.text,
                             joinYr,
                             dob.millisecondsSinceEpoch);
                         Navigator.pushNamed(context, SocialScreen.id);
