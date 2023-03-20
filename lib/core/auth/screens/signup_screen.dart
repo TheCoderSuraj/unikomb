@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:unikomb/core/auth/screens/signup_screen.dart';
 import '../../../utils/asset_path.dart';
 import '../../../utils/common_method_widgets.dart';
 import '../../../utils/constants.dart';
@@ -16,16 +15,17 @@ import '../widgets/my_toggle_button.dart';
 import '../widgets/password_field.dart';
 import 'email_verification_screen.dart';
 import 'forget_password_screen.dart';
+import 'login_screen.dart';
 
-class LoginScreen extends StatefulWidget {
-  static const id = "LoginScreenId";
-  const LoginScreen({super.key});
+class SignUpScreen extends StatefulWidget {
+  static const id = "SignUpScreenId";
+  const SignUpScreen({super.key});
 
   @override
-  State<LoginScreen> createState() => _LoginScreenState();
+  State<SignUpScreen> createState() => _SignUpScreenState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
+class _SignUpScreenState extends State<SignUpScreen> {
   bool isLogin = true;
   bool rememberMe = true;
   bool hidePassword = true;
@@ -36,6 +36,7 @@ class _LoginScreenState extends State<LoginScreen> {
   // these are only for login page
   TextEditingController _emailController = TextEditingController();
   TextEditingController _passwordController = TextEditingController();
+  TextEditingController _confirmPasswordController = TextEditingController();
   @override
   void initState() {
     super.initState();
@@ -73,8 +74,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     style: kTitleTextStyle,
                   ),
                   const SizedBox(height: 20),
-                  buildLoginPage(),
-
+                  buildSignUpWidget(),
                   const Spacer(),
                   // const AuthBottomWidget(),
                 ],
@@ -83,7 +83,7 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 
-  Widget buildLoginPage() {
+  Widget buildSignUpWidget() {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 30),
       child: Column(
@@ -101,123 +101,63 @@ class _LoginScreenState extends State<LoginScreen> {
             labelText: "Password",
           ),
           const SizedBox(height: 10),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              Row(
-                children: [
-                  Checkbox(
-                    value: rememberMe,
-                    onChanged: (value) {
-                      setState(() {
-                        rememberMe = value ?? true;
-                      });
-                    },
-                  ),
-                  // const SizedBox(width: 10),
-                  const Text(
-                    "Remember Me",
-                    // style: kDefaultTextStyle,
-                  ),
-                ],
-              ),
-              TextButton(
-                onPressed: () {
-                  Navigator.pushNamed(context, ForgetPasswordScreen.id);
-                },
-                child: const Text("Forget Password?"),
-              ),
-            ],
+          PasswordField(
+            controller: _confirmPasswordController,
+            labelText: "Confirm Password",
+            validator: (value) {
+              if (value == null || value == "") {
+                return "Confirm password is required";
+              } else if (value != _passwordController.text) {
+                return "Password does not match";
+              }
+            },
           ),
+          const SizedBox(height: 10),
           const SizedBox(height: 15),
           ActionButton(
             widthRatio: .7,
-            title: "Log In",
-            onPressed: () {
+            title: "Sign Up",
+            onPressed: () async {
               if (!(_key.currentState?.validate() ?? false)) return;
-
-              // login code
-
-              userLogIn();
+              setState(() {
+                isLoading = true;
+              });
+              // register code
+              Auth.registerUser(
+                _emailController.text,
+                _passwordController.text,
+                onComplete: () {
+                  setState(() {
+                    isLoading = false;
+                    // Navigator.pushNamed(context, EmailVerificationScreen.id,
+                    //     arguments: Auth.getUserEmailAddress());
+                  });
+                },
+                onError: (error) {
+                  setState(() {
+                    isLoading = false;
+                  });
+                  showMyToast("Error: $error", isError: true);
+                },
+              );
             },
           ),
           const SizedBox(height: 15),
           Wrap(
             crossAxisAlignment: WrapCrossAlignment.center,
             children: [
-              const Text("Don't have an account?"),
+              const Text("Already have an account?"),
               TextButton(
-                child: const Text("Sign Up!"),
+                child: const Text("Log In!"),
                 onPressed: () {
                   Navigator.pushNamedAndRemoveUntil(
-                      context, SignUpScreen.id, (route) => false);
+                      context, LoginScreen.id, (route) => false);
                 },
               ),
             ],
           ),
         ],
       ),
-    );
-  }
-
-  void userLogIn() async {
-    setState(() {
-      isLoading = true;
-    });
-    Auth.signInUser(_emailController.text, _passwordController.text,
-        onComplete: () async {
-      // saving email and password for remember me option
-      String email = rememberMe ? _emailController.text : "";
-      String password = rememberMe ? _passwordController.text : "";
-      context.read<SharedPrefProvider>().changeLoginEmail(email);
-      context.read<SharedPrefProvider>().changeLoginPassword(password);
-
-      // fetching user data from database
-      if (Auth.checkIfEmailIsVerified()) {
-        Navigator.pushNamedAndRemoveUntil(context, HomeScreen.id, (r) => false);
-      } else {
-        Navigator.pushNamed(
-          context,
-          EmailVerificationScreen.id,
-          arguments: Auth.getUserEmailAddress(),
-        );
-      }
-      setState(() {
-        isLoading = false;
-      });
-    }, onError: (error) {
-      setState(() {
-        isLoading = false;
-      });
-      showMyToast("Error: $error", isError: true);
-    });
-  }
-}
-
-class AuthAppTitle extends StatelessWidget {
-  const AuthAppTitle({
-    super.key,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        const Text(
-          kAppName,
-          style: kTitleTextStyle,
-        ),
-        const SizedBox(width: 20),
-        ClipRRect(
-          borderRadius: BorderRadius.circular(25),
-          child: Image.asset(
-            apAppLogo,
-            height: 50,
-            fit: BoxFit.cover,
-          ),
-        ),
-      ],
     );
   }
 }

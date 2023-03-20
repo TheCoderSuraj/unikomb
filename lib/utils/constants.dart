@@ -1,14 +1,14 @@
 import "package:flutter/material.dart";
 // import 'package:google_fonts/google_fonts.dart';
 
-const kAppName = "UniPeerCom";
+const kAppName = "UniKomb";
 const kPagePadding = EdgeInsets.all(12);
 const kAuthPagePadding = EdgeInsets.all(24);
 const double kAuthPagesTopPadding = 80.0;
 const double kMaxScreenWidthLimit = 600;
 const kMinAppUpgraderVersion = "1.2.0";
 
-const kAppUrl = "https://ieee-bytes.web.app/";
+const kMinJoinYear = 1950;
 
 const kTestImgUrl = "https://picsum.photos/200";
 
@@ -18,6 +18,11 @@ const kLoginEmailPrefStringId = "Login Email Pref String Id";
 const kLoginPasswordPrefStringId = "Login Password Pref String Id";
 
 // colors
+// const kYellowColor = Color(0xffffb642);
+// const kYellowColor1 = Color(0xffffa91c);
+// const kBlueColor = Color(0xff23a9b2);
+// const kBlueColor1 = Color(0xff18bdaf);
+
 const kHighLightColor = Color(0x5042C2FF);
 const kBackGroundColor = Color(0x50FEF5AC);
 
