@@ -1,8 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:unikomb/core/auth/functions/auth/auth.dart';
 import 'package:unikomb/core/auth/providers/registration_provider.dart';
+import 'package:unikomb/core/auth/screens/email_verification_screen.dart';
 import 'package:unikomb/core/auth/screens/login_screen.dart';
 import 'package:unikomb/core/auth/screens/skill_screen.dart';
+import 'package:unikomb/core/general/screens/home_screen.dart';
+import 'package:unikomb/core/storage/functions/account/account_database_api.dart';
+import 'package:unikomb/utils/common_method_widgets.dart';
+import 'package:unikomb/utils/utility.dart';
 import 'package:unikomb/widgets/input_field.dart';
 import 'package:unikomb/widgets/screen_page_setup.dart';
 
@@ -57,6 +63,19 @@ class _SocialScreenState extends State<SocialScreen> {
                   //   picUrl: picUrl,
                   //   email: email,
                   // );
+                  if (!Auth.checkIfUserLoggedIn()) {
+                    showMyToast("User not logged in!", isError: true);
+                    return;
+                  }
+                  AccountModel am =
+                      context.read<RegistrationProvider>().getModel();
+                  AccountDatabaseApi.addAccount(am,
+                      uid: Auth.getCurrentUserUid()!, onSuccess: () {
+                    Navigator.pushNamedAndRemoveUntil(
+                        context, EmailVerificationScreen.id, (route) => false);
+                  }, onError: (e) {
+                    showMyToast("Account database error: $e");
+                  });
                 },
                 child: const Text("Skip"),
               ),

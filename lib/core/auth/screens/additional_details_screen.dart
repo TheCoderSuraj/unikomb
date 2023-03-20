@@ -113,6 +113,7 @@ class _AdditionalDetailsScreenState extends State<AdditionalDetailsScreen> {
               labelText: "Uid *",
               keyboardType: TextInputType.name,
             ),
+            const SizedBox(height: 15),
             InputField(
               validator: (val) {
                 if (val == null || val == "") {

@@ -1,4 +1,6 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:unikomb/core/auth/functions/auth/auth.dart';
 import 'package:unikomb/core/auth/models/skill_model.dart';
 import 'package:unikomb/core/auth/models/account_model.dart';
 
@@ -78,5 +80,22 @@ class RegistrationProvider extends ChangeNotifier {
 
   void setSkills(List<SkillModel> values) {
     _skills = values;
+  }
+
+  AccountModel getModel() {
+    return AccountModel(
+      name: name,
+      dob: dob,
+      uid: uid,
+      course: course,
+      joiningYear: joinYr,
+      picUrl: profileUrl,
+      linkedinUrl: linkedin,
+      bio: bio,
+      skills: skills,
+      projects: projects,
+      email: Auth.getUserEmailAddress(),
+      joiningDate: Timestamp.now(),
+    );
   }
 }

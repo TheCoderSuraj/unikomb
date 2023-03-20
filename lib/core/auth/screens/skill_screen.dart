@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:unikomb/core/auth/models/skill_model.dart';
 import 'package:unikomb/core/auth/screens/login_screen.dart';
 import 'package:unikomb/core/auth/screens/projects_screen.dart';
@@ -6,8 +7,14 @@ import 'package:unikomb/core/auth/widgets/skill_widget.dart';
 import 'package:unikomb/widgets/input_field.dart';
 import 'package:unikomb/widgets/screen_page_setup.dart';
 
+import '../../../utils/common_method_widgets.dart';
 import '../../../utils/constants.dart';
 import '../../../widgets/action_button.dart';
+import '../../storage/functions/account/account_database_api.dart';
+import '../functions/auth/auth.dart';
+import '../models/account_model.dart';
+import '../providers/registration_provider.dart';
+import 'email_verification_screen.dart';
 
 class SkillScreen extends StatefulWidget {
   static const id = "Skill Screen Id";
@@ -64,7 +71,21 @@ class _SkillScreenState extends State<SkillScreen> {
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
                 TextButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    if (!Auth.checkIfUserLoggedIn()) {
+                      showMyToast("User not logged in!", isError: true);
+                      return;
+                    }
+                    AccountModel am =
+                        context.read<RegistrationProvider>().getModel();
+                    AccountDatabaseApi.addAccount(am,
+                        uid: Auth.getCurrentUserUid()!, onSuccess: () {
+                      Navigator.pushNamedAndRemoveUntil(context,
+                          EmailVerificationScreen.id, (route) => false);
+                    }, onError: (e) {
+                      showMyToast("Account database error: $e");
+                    });
+                  },
                   child: Text("Skip"),
                 ),
                 Row(

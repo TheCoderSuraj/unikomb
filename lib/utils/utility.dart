@@ -1,8 +1,16 @@
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 
+import '../core/auth/functions/auth/auth.dart';
+import '../core/auth/models/account_model.dart';
+import '../core/auth/providers/registration_provider.dart';
+import '../core/auth/screens/email_verification_screen.dart';
+import '../core/storage/functions/account/account_database_api.dart';
+import 'common_method_widgets.dart';
 import 'enums.dart';
 
 String convertDateToString(DateTime d) {
@@ -41,3 +49,5 @@ Future<Uint8List> compressImage(Uint8List imgBytes, {int quality = 20}) async {
   print("compressed img size ${result.length}");
   return result;
 }
+
+void skipAction(BuildContext context) {}
