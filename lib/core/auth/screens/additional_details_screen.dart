@@ -1,13 +1,24 @@
+import 'dart:typed_data';
+
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:unikomb/core/auth/functions/auth/auth.dart';
+import 'package:unikomb/core/auth/providers/registration_provider.dart';
 import 'package:unikomb/core/auth/screens/login_screen.dart';
 import 'package:unikomb/core/auth/screens/social_screen.dart';
+import 'package:unikomb/core/storage/functions/media/media_database_api.dart';
 import 'package:unikomb/utils/asset_path.dart';
+import 'package:unikomb/utils/common_method_widgets.dart';
 import 'package:unikomb/utils/constants.dart';
 import 'package:unikomb/utils/validity_methods.dart';
 import 'package:unikomb/widgets/designed_container.dart';
 import 'package:unikomb/widgets/input_field.dart';
 import 'package:unikomb/widgets/screen_page_setup.dart';
 
+import '../../../utils/utility.dart';
+import '../../../widgets/edit_img_button.dart';
+import '../../../widgets/profile_pic.dart';
+import '../../storage/storage_constants.dart';
 import '../widgets/date_button.dart';
 
 class AdditionalDetailsScreen extends StatefulWidget {
@@ -20,8 +31,12 @@ class AdditionalDetailsScreen extends StatefulWidget {
 }
 
 class _AdditionalDetailsScreenState extends State<AdditionalDetailsScreen> {
+  Uint8List? imgBytes;
+  String imgExt = "";
+
   TextEditingController _nameController = TextEditingController();
   TextEditingController _uidController = TextEditingController();
+  TextEditingController _courseController = TextEditingController();
   DateTime dob = DateTime(2002, 01, 14);
   List<DropdownMenuItem<int>> _yrsOpts = [];
   int joinYr = 2000;
@@ -60,13 +75,22 @@ class _AdditionalDetailsScreenState extends State<AdditionalDetailsScreen> {
             const SizedBox(height: 15),
             const AuthAppTitle(),
             const SizedBox(height: 20),
-            ClipRRect(
-              borderRadius: BorderRadius.circular(75),
-              child: Image.asset(
-                apAppLogo,
-                fit: BoxFit.cover,
-                height: 150,
-              ),
+            Stack(
+              children: [
+                GestureDetector(
+                  onTap: (imgBytes == null) ? getImage : null,
+                  child: ProfilePic(
+                    image: (imgBytes == null
+                        ? const AssetImage(apProfilePic)
+                        : MemoryImage(imgBytes!)) as ImageProvider<Object>,
+                    // image: ,
+                  ),
+                ),
+                if (imgBytes != null)
+                  EditImgButton(
+                    onPressed: getImage,
+                  ),
+              ],
             ),
             const SizedBox(height: 20),
             InputField(
@@ -87,6 +111,19 @@ class _AdditionalDetailsScreenState extends State<AdditionalDetailsScreen> {
               },
               controller: _uidController,
               labelText: "Uid *",
+              keyboardType: TextInputType.name,
+            ),
+            InputField(
+              validator: (val) {
+                if (val == null || val == "") {
+                  return "Required parameter";
+                }
+                if (val.length < 3) {
+                  return "at least 4 characters required";
+                }
+              },
+              controller: _courseController,
+              labelText: "Course *",
               keyboardType: TextInputType.name,
             ),
             const SizedBox(height: 15),
@@ -143,8 +180,31 @@ class _AdditionalDetailsScreenState extends State<AdditionalDetailsScreen> {
                 onPressed: () {
                   // go to next screen
                   if (!validateInput()) return;
-
-                  Navigator.pushNamed(context, SocialScreen.id);
+                  if (imgBytes == null) {
+                    showMyToast("Null Image", isError: true);
+                    return;
+                  }
+                  showMyToast("Uploading Image...");
+                  String path =
+                      "$skProfileStorageDatabaseName/${Auth.getCurrentUserUid()}.jpg";
+                  MediaDatabaseApi.uploadImage(
+                      data: imgBytes!,
+                      path: path,
+                      onSuccess: (url) {
+                        if (url == null) {
+                          showMyToast("error on uploading image",
+                              isError: true);
+                          return;
+                        }
+                        showMyToast("Image successfully uploaded");
+                        context.read<RegistrationProvider>().setCompulsoryParam(
+                            _nameController.text,
+                            _uidController.text,
+                            url,
+                            joinYr,
+                            dob.millisecondsSinceEpoch);
+                        Navigator.pushNamed(context, SocialScreen.id);
+                      });
                 },
               ),
             ),
@@ -162,5 +222,15 @@ class _AdditionalDetailsScreenState extends State<AdditionalDetailsScreen> {
     // if(dob.compareTo(DateTime.now()) )
     // if(dob.difference(DateTime.now()))
     return true;
+  }
+
+  void getImage() async {
+    final t = await fetchImage();
+    if (t == null) return;
+    imgBytes = await compressImage(t.bytes!, quality: 20);
+    setState(() {
+      // imgBytes = t.bytes;
+      imgExt = t.extension ?? "png";
+    });
   }
 }

@@ -1,33 +1,43 @@
-class UserModel {
-  UserModel({
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:unikomb/utils/enums.dart';
+
+class AccountModel {
+  AccountModel({
     required this.name,
     required this.dob,
     required this.uid,
     required this.course,
     required this.joiningYear,
     required this.picUrl,
+    required this.email,
     this.skills = const [],
     this.projects = const [],
     this.id = "",
     this.bio,
     this.linkedinUrl,
+    this.joiningDate,
   });
   String id = "";
   String name = "";
+  String email = "";
   String picUrl = '';
   int dob = 0;
   String uid = "";
   String course = "";
   int joiningYear = 0;
+
   List<dynamic> skills = [];
   List<dynamic> projects = [];
   String? bio;
   String? linkedinUrl;
+  Timestamp? joiningDate;
 
-  UserModel.fromJson(Map<String, dynamic> json) {
+  AccountModel.fromJson(Map<String, dynamic> json) {
     id = json['id'];
+    joiningDate = json['joiningDate'];
     name = json['name'];
     picUrl = json['picUrl'];
+    email = json['email'];
     dob = json['dob'];
     uid = json['uid'];
     course = json['course'];
@@ -43,6 +53,7 @@ class UserModel {
     data['id'] = id;
     data['name'] = name;
     data['picUrl'] = picUrl;
+    data['email'] = email;
     data['dob'] = dob;
     data['uid'] = uid;
     data['course'] = course;
@@ -51,19 +62,7 @@ class UserModel {
     data['projects'] = projects;
     data['bio'] = bio;
     data['linkedinUrl'] = linkedinUrl;
+    data['joiningDate'] = joiningDate;
     return data;
   }
 }
-
-// {
-//   "id":"",
-//   "name":"",
-//   "dob":123,
-//   "uid":"",
-//   "course":"cse",
-//   "joiningYear":2020,
-//   "skills":[],
-//   "projects":[],
-//   "bio":"",
-//   "linkedinUrl":""
-// }

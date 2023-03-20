@@ -64,7 +64,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
                   const SizedBox(height: 30),
                   Image.asset(
-                    apAppLogo,
+                    apLoginPic,
                     height: 250,
                   ),
                   const SizedBox(height: 25),
@@ -165,7 +165,7 @@ class _LoginScreenState extends State<LoginScreen> {
       isLoading = true;
     });
     Auth.signInUser(_emailController.text, _passwordController.text,
-        onComplete: () async {
+        onComplete: () {
       // saving email and password for remember me option
       String email = rememberMe ? _emailController.text : "";
       String password = rememberMe ? _passwordController.text : "";
@@ -173,18 +173,23 @@ class _LoginScreenState extends State<LoginScreen> {
       context.read<SharedPrefProvider>().changeLoginPassword(password);
 
       // fetching user data from database
+      Navigator.pushNamedAndRemoveUntil(context, HomeScreen.id, (r) => false);
+      // Navigator.push(
+      //     context,
+      //     MaterialPageRoute(
+      //         builder: (context) =>
+      //             EmailVerificationScreen(email: "surajthecoder@gmail.com")));
       if (Auth.checkIfEmailIsVerified()) {
+        print("home screen");
         Navigator.pushNamedAndRemoveUntil(context, HomeScreen.id, (r) => false);
       } else {
+        print("email verification ${Auth.getUserEmailAddress()}");
         Navigator.pushNamed(
           context,
           EmailVerificationScreen.id,
           arguments: Auth.getUserEmailAddress(),
         );
       }
-      setState(() {
-        isLoading = false;
-      });
     }, onError: (error) {
       setState(() {
         isLoading = false;

@@ -33,23 +33,23 @@ class _SplashScreenState extends State<SplashScreen> {
         // todo : uncomment below and remove temp code
 
         // go to home if user logged in otherwise login screen
-        // if (Auth.checkIfUserLoggedIn()) {
-        //   Navigator.pushNamedAndRemoveUntil(
-        //       context, HomeScreen.id, (route) => false);
-        // } else {
-        //   Navigator.pushNamedAndRemoveUntil(
-        //     context,
-        //     LoginScreen.id,
-        //     (r) => false,
-        //   );
-        // }
+        if (Auth.checkIfUserLoggedIn()) {
+          Navigator.pushNamedAndRemoveUntil(
+              context, HomeScreen.id, (route) => false);
+        } else {
+          Navigator.pushNamedAndRemoveUntil(
+            context,
+            LoginScreen.id,
+            (r) => false,
+          );
+        }
 
         // temp code
-        Navigator.pushNamedAndRemoveUntil(
-          context,
-          LoginScreen.id,
-          (r) => false,
-        );
+        // Navigator.pushNamedAndRemoveUntil(
+        //   context,
+        //   LoginScreen.id,
+        //   (r) => false,
+        // );
       }
     });
   }

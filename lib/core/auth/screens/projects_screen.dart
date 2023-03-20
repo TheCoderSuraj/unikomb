@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:unikomb/core/auth/screens/login_screen.dart';
+import 'package:unikomb/core/general/screens/home_screen.dart';
 import 'package:unikomb/widgets/screen_page_setup.dart';
 
 import '../../../utils/constants.dart';
@@ -64,11 +65,24 @@ class _ProjectsScreenState extends State<ProjectsScreen> {
               children: [
                 TextButton(
                   onPressed: () {},
-                  child: Text("Skip"),
+                  child: const Text("Skip"),
                 ),
-                ElevatedButton(
-                  onPressed: () {},
-                  child: const Text("Next"),
+                Row(
+                  children: [
+                    TextButton(
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                      child: const Text("Previous"),
+                    ),
+                    const SizedBox(width: 15),
+                    ElevatedButton(
+                      onPressed: () {
+                        Navigator.pushNamed(context, HomeScreen.id);
+                      },
+                      child: const Text("Done"),
+                    ),
+                  ],
                 ),
               ],
             ),

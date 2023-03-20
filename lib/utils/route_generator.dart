@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:unikomb/core/auth/screens/additional_details_screen.dart';
+import 'package:unikomb/core/auth/screens/skill_screen.dart';
 import 'package:unikomb/core/auth/screens/social_screen.dart';
+import 'package:unikomb/core/general/screens/home_screen.dart';
+import 'package:unikomb/utils/validity_methods.dart';
 import '../core/auth/screens/email_verification_screen.dart';
 import '../core/auth/screens/forget_password_screen.dart';
 import '../core/auth/screens/login_screen.dart';
+import '../core/auth/screens/projects_screen.dart';
 import '../core/auth/screens/signup_screen.dart';
 import '../core/general/screens/error_screen.dart';
 import '../core/general/screens/on_boarding_screen.dart';
@@ -15,14 +19,21 @@ class RouteGenerator {
 
     switch (settings.name) {
       // Auth
-
-      case SocialScreen.id:
-        return MaterialPageRoute(
-          builder: (context) => const SocialScreen(),
-        );
       case AdditionalDetailsScreen.id:
         return MaterialPageRoute(
           builder: (context) => const AdditionalDetailsScreen(),
+        );
+      case SkillScreen.id:
+        return MaterialPageRoute(
+          builder: (context) => const SkillScreen(),
+        );
+      case ProjectsScreen.id:
+        return MaterialPageRoute(
+          builder: (context) => const ProjectsScreen(),
+        );
+      case SocialScreen.id:
+        return MaterialPageRoute(
+          builder: (context) => const SocialScreen(),
         );
       case LoginScreen.id:
         return MaterialPageRoute(
@@ -37,13 +48,22 @@ class RouteGenerator {
           builder: (context) => const ForgetPasswordScreen(),
         );
       case EmailVerificationScreen.id:
-        return MaterialPageRoute(
-          builder: (context) => const LoginScreen(),
-        );
+        if (args is String && validateEmail(args) == null) {
+          return MaterialPageRoute(
+            builder: (context) => EmailVerificationScreen(
+              email: args,
+            ),
+          );
+        }
+        return _buildError(message: "Email Verification Error: Invalid email");
       // General
       case SplashScreen.id:
         return MaterialPageRoute(
           builder: (context) => const SplashScreen(),
+        );
+      case HomeScreen.id:
+        return MaterialPageRoute(
+          builder: (context) => const HomeScreen(),
         );
       case OnBoardingScreen.id:
         return MaterialPageRoute(

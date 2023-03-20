@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import '../../../utils/common_method_widgets.dart';
 import '../../../utils/constants.dart';
 import '../../../widgets/action_button.dart';
+import '../../general/screens/home_screen.dart';
 import '../functions/auth/auth.dart';
 
 class EmailVerificationScreen extends StatefulWidget {
@@ -45,11 +46,11 @@ class _EmailVerificationScreenState extends State<EmailVerificationScreen> {
       Auth.reloadCurrentUser();
       if (Auth.checkIfEmailIsVerified()) {
         // goForInitialNavigation(context);
-        // Navigator.pushNamedAndRemoveUntil(
-        //   context,
-        //   MemeListPage.id,
-        //   (route) => false,
-        // );
+        Navigator.pushNamedAndRemoveUntil(
+          context,
+          HomeScreen.id,
+          (route) => false,
+        );
       }
     });
   }

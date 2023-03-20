@@ -12,6 +12,8 @@ const kMinJoinYear = 1950;
 
 const kTestImgUrl = "https://picsum.photos/200";
 
+// database
+
 //shared pref ids
 const kFirstTimeUserPrefBoolId = "First Time User prefBool id";
 const kLoginEmailPrefStringId = "Login Email Pref String Id";

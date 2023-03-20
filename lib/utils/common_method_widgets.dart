@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:oktoast/oktoast.dart';
 import '../core/auth/functions/auth/auth.dart';
+import '../core/auth/screens/login_screen.dart';
 import 'constants.dart';
 
 void showMyToast(
@@ -35,11 +36,12 @@ Widget buildBackButton(BuildContext context) {
 IconButton getSignOutButton(BuildContext context) {
   return IconButton(
     onPressed: () {
-      Auth.signOutUser();
-      // onComplete: () =>
-      //  Navigator.pushNamedAndRemoveUntil(
-      //     context, LoginScreen.id, (route) => false));
-      // context.read<AccountProvider>().clearAccount();
+      Auth.signOutUser(onComplete: () {
+        return Navigator.pushNamedAndRemoveUntil(
+            context, LoginScreen.id, (route) => false);
+      }
+          // context.read<AccountProvider>().clearAccount();
+          );
     },
     icon: const Icon(
       Icons.logout_rounded,

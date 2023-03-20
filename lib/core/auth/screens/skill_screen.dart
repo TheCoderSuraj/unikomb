@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:unikomb/core/auth/models/skill_model.dart';
 import 'package:unikomb/core/auth/screens/login_screen.dart';
+import 'package:unikomb/core/auth/screens/projects_screen.dart';
 import 'package:unikomb/core/auth/widgets/skill_widget.dart';
 import 'package:unikomb/widgets/input_field.dart';
 import 'package:unikomb/widgets/screen_page_setup.dart';
@@ -18,12 +19,6 @@ class SkillScreen extends StatefulWidget {
 
 class _SkillScreenState extends State<SkillScreen> {
   List<SkillModel> _skills = [];
-  @override
-  void initState() {
-    super.initState();
-    _skills = List.generate(5,
-        (index) => SkillModel(title: "title$index", level: index * index % 10));
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -72,9 +67,22 @@ class _SkillScreenState extends State<SkillScreen> {
                   onPressed: () {},
                   child: Text("Skip"),
                 ),
-                ElevatedButton(
-                  onPressed: () {},
-                  child: const Text("Next"),
+                Row(
+                  children: [
+                    TextButton(
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                      child: const Text("Previous"),
+                    ),
+                    const SizedBox(width: 15),
+                    ElevatedButton(
+                      onPressed: () {
+                        Navigator.pushNamed(context, ProjectsScreen.id);
+                      },
+                      child: const Text("Next"),
+                    ),
+                  ],
                 ),
               ],
             ),

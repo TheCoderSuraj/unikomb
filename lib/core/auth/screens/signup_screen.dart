@@ -11,10 +11,8 @@ import '../../../widgets/spinning_widget.dart';
 import '../../general/providers/shared_pref_provider.dart';
 import '../../general/screens/home_screen.dart';
 import '../functions/auth/auth.dart';
-import '../widgets/my_toggle_button.dart';
 import '../widgets/password_field.dart';
-import 'email_verification_screen.dart';
-import 'forget_password_screen.dart';
+import 'additional_details_screen.dart';
 import 'login_screen.dart';
 
 class SignUpScreen extends StatefulWidget {
@@ -37,17 +35,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
   TextEditingController _emailController = TextEditingController();
   TextEditingController _passwordController = TextEditingController();
   TextEditingController _confirmPasswordController = TextEditingController();
-  @override
-  void initState() {
-    super.initState();
-    final t = context.read<SharedPrefProvider>();
-    _emailController.text = t.loginEmail;
-    _passwordController.text = t.loginPassword;
-    if (Auth.checkIfUserLoggedIn()) {
-      Navigator.pushNamedAndRemoveUntil(
-          context, HomeScreen.id, (route) => false);
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -65,12 +52,12 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
                   const SizedBox(height: 30),
                   Image.asset(
-                    apAppLogo,
+                    apRegisterPic,
                     height: 250,
                   ),
                   const SizedBox(height: 25),
                   const Text(
-                    "Log In Screen",
+                    "Sign Up Screen",
                     style: kTitleTextStyle,
                   ),
                   const SizedBox(height: 20),
@@ -123,14 +110,15 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 isLoading = true;
               });
               // register code
+
               Auth.registerUser(
                 _emailController.text,
                 _passwordController.text,
                 onComplete: () {
                   setState(() {
                     isLoading = false;
-                    // Navigator.pushNamed(context, EmailVerificationScreen.id,
-                    //     arguments: Auth.getUserEmailAddress());
+                    Navigator.pushNamed(context, AdditionalDetailsScreen.id,
+                        arguments: Auth.getUserEmailAddress());
                   });
                 },
                 onError: (error) {

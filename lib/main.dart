@@ -1,12 +1,16 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:oktoast/oktoast.dart';
 import 'package:provider/provider.dart';
+import 'package:unikomb/core/auth/providers/registration_provider.dart';
 import 'package:unikomb/core/auth/screens/additional_details_screen.dart';
+import 'package:unikomb/core/auth/screens/email_verification_screen.dart';
 import 'package:unikomb/core/auth/screens/skill_screen.dart';
 import 'package:unikomb/core/auth/screens/social_screen.dart';
 import 'package:unikomb/utils/route_generator.dart';
 
 import 'core/auth/screens/projects_screen.dart';
+import 'core/auth/screens/signup_screen.dart';
 import 'core/general/providers/shared_pref_provider.dart';
 import 'core/general/screens/splash_screen.dart';
 import 'firebase_options.dart';
@@ -23,6 +27,9 @@ void main() async {
     // initialize all providers
     MultiProvider(
       providers: [
+        ChangeNotifierProvider(
+          create: (context) => RegistrationProvider(),
+        ),
         ChangeNotifierProvider(
           create: (context) => SharedPrefProvider(),
         ),
@@ -50,11 +57,15 @@ class _UniKombAppState extends State<UniKombApp> {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      onGenerateRoute: RouteGenerator.generateRoute,
-      // initialRoute: HomeScreen.id,
-      // initialRoute: SocialScreen.id,
-      home: ProjectsScreen(),
+    return OKToast(
+      child: MaterialApp(
+        onGenerateRoute: RouteGenerator.generateRoute,
+        initialRoute: SplashScreen.id,
+        // initialRoute: SocialScreen.id,
+        //   home: EmailVerificationScreen(
+        //     email: "surajthecoder@gmail.com",
+        //   ),
+      ),
     );
   }
 }
