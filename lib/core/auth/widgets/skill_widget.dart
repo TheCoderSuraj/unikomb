@@ -13,8 +13,17 @@ class SkillWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return DesignedContainer(
       child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Text(skill.title),
+          Text(skill.level.toString()),
+          // Slider(
+
+          //   min: 0,
+          //   max: 10,
+          //   value: skill.level.toDouble(),
+          //   onChanged: (double value) {},
+          // )
         ],
       ),
     );

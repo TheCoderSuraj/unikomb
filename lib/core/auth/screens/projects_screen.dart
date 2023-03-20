@@ -1,29 +1,23 @@
 import 'package:flutter/material.dart';
-import 'package:unikomb/core/auth/models/skill_model.dart';
 import 'package:unikomb/core/auth/screens/login_screen.dart';
-import 'package:unikomb/core/auth/widgets/skill_widget.dart';
-import 'package:unikomb/widgets/input_field.dart';
 import 'package:unikomb/widgets/screen_page_setup.dart';
 
 import '../../../utils/constants.dart';
 import '../../../widgets/action_button.dart';
+import '../../../widgets/input_field.dart';
+import '../models/project_model.dart';
+import '../widgets/project_widget.dart';
 
-class SkillScreen extends StatefulWidget {
-  static const id = "Skill Screen Id";
-  const SkillScreen({super.key});
+class ProjectsScreen extends StatefulWidget {
+  static const id = "Projects Screen Id";
+  const ProjectsScreen({super.key});
 
   @override
-  State<SkillScreen> createState() => _SkillScreenState();
+  State<ProjectsScreen> createState() => _ProjectsScreenState();
 }
 
-class _SkillScreenState extends State<SkillScreen> {
-  List<SkillModel> _skills = [];
-  @override
-  void initState() {
-    super.initState();
-    _skills = List.generate(5,
-        (index) => SkillModel(title: "title$index", level: index * index % 10));
-  }
+class _ProjectsScreenState extends State<ProjectsScreen> {
+  List<ProjectModel> _projects = [];
 
   @override
   Widget build(BuildContext context) {
@@ -44,9 +38,9 @@ class _SkillScreenState extends State<SkillScreen> {
                       ListView.builder(
                         shrinkWrap: true,
                         physics: const NeverScrollableScrollPhysics(),
-                        itemCount: _skills.length,
-                        itemBuilder: (context, index) => SkillWidget(
-                          skill: _skills[index],
+                        itemCount: _projects.length,
+                        itemBuilder: (context, index) => ProjectWidget(
+                          project: _projects[index],
                         ),
                       ),
                       const SizedBox(height: 15),
@@ -55,9 +49,9 @@ class _SkillScreenState extends State<SkillScreen> {
                             horizontal: 9, vertical: 6),
                         widthRatio: 0.7,
                         onPressed: () {
-                          showAddSkillDialog();
+                          showAddProjectDialog();
                         },
-                        title: 'Add New Skill',
+                        title: 'Add New Project',
                       ),
                     ],
                   ),
@@ -85,26 +79,44 @@ class _SkillScreenState extends State<SkillScreen> {
     );
   }
 
-  void showAddSkillDialog() {
+  void showAddProjectDialog() {
     TextEditingController _skillController = TextEditingController();
-    TextEditingController _levelController = TextEditingController();
+    TextEditingController _descController = TextEditingController();
+    TextEditingController _titleController = TextEditingController();
+    TextEditingController _urlController = TextEditingController();
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text("Add Skill"),
+        title: const Text("Add New Project"),
         content: StatefulBuilder(
           builder: (context, setState) => Column(
             mainAxisSize: MainAxisSize.min,
             children: [
               InputField(
-                labelText: "Skill",
-                controller: _skillController,
+                labelText: "Title",
+                controller: _titleController,
               ),
               const SizedBox(height: 15),
               InputField(
-                controller: _levelController,
-                labelText: "level",
-                keyboardType: TextInputType.number,
+                controller: _descController,
+                labelText: "Desc",
+                keyboardType: TextInputType.text,
+                maxLines: 2,
+                maxLength: 300,
+              ),
+              const SizedBox(height: 15),
+              InputField(
+                controller: _skillController,
+                labelText: "Skill",
+                keyboardType: TextInputType.text,
+                maxLines: 1,
+              ),
+              const SizedBox(height: 15),
+              InputField(
+                controller: _urlController,
+                labelText: "Url",
+                keyboardType: TextInputType.url,
+                maxLines: 1,
               ),
               const SizedBox(height: 15),
             ],
@@ -120,13 +132,14 @@ class _SkillScreenState extends State<SkillScreen> {
           TextButton(
             onPressed: () {
               Navigator.pop(context);
-              int? t = int.tryParse(_levelController.text);
-              if (t == null) {
-                return;
-              }
               setState(() {
-                _skills.add(
-                  SkillModel(title: _skillController.text, level: t),
+                _projects.add(
+                  ProjectModel(
+                    title: _titleController.text,
+                    desc: _descController.text,
+                    skill: [_skillController.text],
+                    url: _urlController.text,
+                  ),
                 );
               });
             },

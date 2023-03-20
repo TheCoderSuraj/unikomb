@@ -6,6 +6,7 @@ import 'package:unikomb/core/auth/screens/skill_screen.dart';
 import 'package:unikomb/core/auth/screens/social_screen.dart';
 import 'package:unikomb/utils/route_generator.dart';
 
+import 'core/auth/screens/projects_screen.dart';
 import 'core/general/providers/shared_pref_provider.dart';
 import 'core/general/screens/splash_screen.dart';
 import 'firebase_options.dart';
@@ -53,7 +54,7 @@ class _UniKombAppState extends State<UniKombApp> {
       onGenerateRoute: RouteGenerator.generateRoute,
       // initialRoute: HomeScreen.id,
       // initialRoute: SocialScreen.id,
-      home: SkillScreen(),
+      home: ProjectsScreen(),
     );
   }
 }
