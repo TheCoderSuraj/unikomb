@@ -55,11 +55,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     apRegisterPic,
                     height: 250,
                   ),
-                  const SizedBox(height: 25),
-                  const Text(
-                    "Sign Up Screen",
-                    style: kTitleTextStyle,
-                  ),
+                  // const SizedBox(height: 25),
+                  // const Text(
+                  //   "Sign Up Screen",
+                  //   style: kTitleTextStyle,
+                  // ),
                   const SizedBox(height: 20),
                   buildSignUpWidget(),
                   const Spacer(),

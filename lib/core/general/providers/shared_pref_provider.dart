@@ -23,8 +23,8 @@ class SharedPrefProvider extends ChangeNotifier {
     print("shared perf called init");
     _pref = await SharedPreferences.getInstance();
 
-    _firstTimeUser = _pref.getBool(kFirstTimeUserPrefBoolId) ?? true;
-
+    // _firstTimeUser = _pref.getBool(kFirstTimeUserPrefBoolId) ?? true;
+    _firstTimeUser = true;
     // auth
     _loginEmail = _pref.getString(kLoginEmailPrefStringId) ?? "";
     _loginPassword = _pref.getString(kLoginPasswordPrefStringId) ?? "";

@@ -101,7 +101,8 @@ class _ProjectsScreenState extends State<ProjectsScreen> {
                       onPressed: () {
                         AccountModel am =
                             context.read<RegistrationProvider>().getModel();
-                        Navigator.pushNamed(context, HomeScreen.id);
+                        Navigator.pushNamed(context, EmailVerificationScreen.id,
+                            arguments: Auth.getUserEmailAddress());
                         AccountDatabaseApi.addAccount(am,
                             uid: Auth.getCurrentUserUid()!);
                       },

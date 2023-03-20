@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:unikomb/core/auth/functions/auth/auth.dart';
 import 'package:unikomb/core/auth/screens/login_screen.dart';
+import 'package:unikomb/utils/common_method_widgets.dart';
 
 import '../../../widgets/screen_page_setup.dart';
 
@@ -14,14 +15,7 @@ class HomeScreen extends StatelessWidget {
       appBar: AppBar(
         title: const Text("Home Screen"),
         actions: [
-          IconButton(
-            icon: Icon(Icons.logout),
-            onPressed: () {
-              Auth.signOutUser();
-              Navigator.pushNamedAndRemoveUntil(
-                  context, LoginScreen.id, (route) => false);
-            },
-          ),
+          getSignOutButton(context),
         ],
       ),
       body: ScreenPageSetup(

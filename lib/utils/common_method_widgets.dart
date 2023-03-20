@@ -36,16 +36,22 @@ Widget buildBackButton(BuildContext context) {
 IconButton getSignOutButton(BuildContext context) {
   return IconButton(
     onPressed: () {
-      Auth.signOutUser(onComplete: () {
-        return Navigator.pushNamedAndRemoveUntil(
+      if (!Auth.checkIfUserLoggedIn()) {
+        Navigator.pushNamedAndRemoveUntil(
             context, LoginScreen.id, (route) => false);
+        return;
+      }
+      Auth.signOutUser(onComplete: () {
+        Navigator.pushNamedAndRemoveUntil(
+            context, LoginScreen.id, (route) => false);
+        return;
       }
           // context.read<AccountProvider>().clearAccount();
           );
     },
     icon: const Icon(
       Icons.logout_rounded,
-      color: Colors.grey,
+      color: Colors.white,
     ),
   );
 }

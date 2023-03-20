@@ -68,10 +68,10 @@ class _LoginScreenState extends State<LoginScreen> {
                     height: 250,
                   ),
                   const SizedBox(height: 25),
-                  const Text(
-                    "Log In Screen",
-                    style: kTitleTextStyle,
-                  ),
+                  // const Text(
+                  //   "Log In Screen",
+                  //   style: kTitleTextStyle,
+                  // ),
                   const SizedBox(height: 20),
                   buildLoginPage(),
 
