@@ -2,6 +2,8 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:unikomb/core/auth/screens/additional_details_screen.dart';
+import 'package:unikomb/core/auth/screens/skill_screen.dart';
+import 'package:unikomb/core/auth/screens/social_screen.dart';
 import 'package:unikomb/utils/route_generator.dart';
 
 import 'core/general/providers/shared_pref_provider.dart';
@@ -50,7 +52,8 @@ class _UniKombAppState extends State<UniKombApp> {
     return MaterialApp(
       onGenerateRoute: RouteGenerator.generateRoute,
       // initialRoute: HomeScreen.id,
-      initialRoute: AdditionalDetailsScreen.id,
+      // initialRoute: SocialScreen.id,
+      home: SkillScreen(),
     );
   }
 }
