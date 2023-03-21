@@ -57,4 +57,4 @@ In summary, this project is important because it can help to address the barrier
 
 >> Building a credible mechanism through industry tie-ups
 
->> Rewards for to top contributors
+>> Rewards for top contributors
