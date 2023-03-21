@@ -42,10 +42,10 @@ class _LoginScreenState extends State<LoginScreen> {
     final t = context.read<SharedPrefProvider>();
     _emailController.text = t.loginEmail;
     _passwordController.text = t.loginPassword;
-    if (Auth.checkIfUserLoggedIn()) {
-      Navigator.pushNamedAndRemoveUntil(
-          context, HomeScreen.id, (route) => false);
-    }
+    // if (Auth.checkIfUserLoggedIn()) {
+    //   Navigator.pushNamedAndRemoveUntil(
+    //       context, HomeScreen.id, (route) => false);
+    // }
   }
 
   @override

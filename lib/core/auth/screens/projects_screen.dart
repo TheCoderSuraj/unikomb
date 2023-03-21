@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:unikomb/core/auth/models/skill_model.dart';
 import 'package:unikomb/core/auth/screens/login_screen.dart';
 import 'package:unikomb/core/general/screens/home_screen.dart';
 import 'package:unikomb/widgets/screen_page_setup.dart';
@@ -99,12 +100,15 @@ class _ProjectsScreenState extends State<ProjectsScreen> {
                     const SizedBox(width: 15),
                     ElevatedButton(
                       onPressed: () {
+                        context
+                            .read<RegistrationProvider>()
+                            .setProjects(_projects);
                         AccountModel am =
                             context.read<RegistrationProvider>().getModel();
-                        Navigator.pushNamed(context, EmailVerificationScreen.id,
-                            arguments: Auth.getUserEmailAddress());
                         AccountDatabaseApi.addAccount(am,
                             uid: Auth.getCurrentUserUid()!);
+                        Navigator.pushNamed(context, EmailVerificationScreen.id,
+                            arguments: Auth.getUserEmailAddress());
                       },
                       child: const Text("Done"),
                     ),
@@ -177,7 +181,7 @@ class _ProjectsScreenState extends State<ProjectsScreen> {
                   ProjectModel(
                     title: _titleController.text,
                     desc: _descController.text,
-                    skill: [_skillController.text],
+                    skill: [SkillModel(title: _skillController.text)],
                     url: _urlController.text,
                   ),
                 );

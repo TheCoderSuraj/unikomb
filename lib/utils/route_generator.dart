@@ -1,8 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:unikomb/core/auth/functions/auth/auth.dart';
+import 'package:unikomb/core/auth/models/project_model.dart';
 import 'package:unikomb/core/auth/screens/additional_details_screen.dart';
 import 'package:unikomb/core/auth/screens/skill_screen.dart';
 import 'package:unikomb/core/auth/screens/social_screen.dart';
 import 'package:unikomb/core/general/screens/home_screen.dart';
+import 'package:unikomb/core/general/screens/profile_screen.dart';
+import 'package:unikomb/core/general/screens/settings_screen.dart';
+import 'package:unikomb/core/general/screens/single_project_screen.dart';
 import 'package:unikomb/utils/validity_methods.dart';
 import '../core/auth/screens/email_verification_screen.dart';
 import '../core/auth/screens/forget_password_screen.dart';
@@ -48,18 +53,35 @@ class RouteGenerator {
           builder: (context) => const ForgetPasswordScreen(),
         );
       case EmailVerificationScreen.id:
-        if (args is String && validateEmail(args) == null) {
+        return MaterialPageRoute(
+          builder: (context) => EmailVerificationScreen(
+            email: Auth.getUserEmailAddress(),
+          ),
+          // if (args is String && validateEmail(args) == null) {
+        );
+      // }
+      //return _buildError(message: "Email Verification Error: Invalid email");
+      // General
+      case SingleProjectScreen.id:
+        if (args is ProjectModel) {
           return MaterialPageRoute(
-            builder: (context) => EmailVerificationScreen(
-              email: args,
+            builder: (context) => SingleProjectScreen(
+              project: args,
             ),
           );
         }
-        return _buildError(message: "Email Verification Error: Invalid email");
-      // General
+        return _buildError(message: "Single Project Error: Invalid Project");
       case SplashScreen.id:
         return MaterialPageRoute(
           builder: (context) => const SplashScreen(),
+        );
+      case SettingsScreen.id:
+        return MaterialPageRoute(
+          builder: (context) => const SettingsScreen(),
+        );
+      case ProfileScreen.id:
+        return MaterialPageRoute(
+          builder: (context) => const ProfileScreen(),
         );
       case HomeScreen.id:
         return MaterialPageRoute(

@@ -100,6 +100,7 @@ class _SkillScreenState extends State<SkillScreen> {
                     ElevatedButton(
                       onPressed: () {
                         Navigator.pushNamed(context, ProjectsScreen.id);
+                        context.read<RegistrationProvider>().setSkills(_skills);
                       },
                       child: const Text("Next"),
                     ),

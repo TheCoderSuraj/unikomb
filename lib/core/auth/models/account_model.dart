@@ -1,4 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:unikomb/core/auth/models/project_model.dart';
+import 'package:unikomb/core/auth/models/skill_model.dart';
+import 'package:unikomb/utils/constants.dart';
 import 'package:unikomb/utils/enums.dart';
 
 class AccountModel {
@@ -16,6 +19,7 @@ class AccountModel {
     this.bio,
     this.linkedinUrl,
     this.joiningDate,
+    this.leetUsername,
   });
   String id = "";
   String name = "";
@@ -24,16 +28,18 @@ class AccountModel {
   int dob = 0;
   String uid = "";
   String course = "";
+  String? leetUsername;
   int joiningYear = 0;
 
-  List<dynamic> skills = [];
-  List<dynamic> projects = [];
+  List<SkillModel> skills = [];
+  List<ProjectModel> projects = [];
   String? bio;
   String? linkedinUrl;
   Timestamp? joiningDate;
 
   AccountModel.fromJson(Map<String, dynamic> json) {
     id = json['id'];
+    leetUsername = json['leetUsername'];
     joiningDate = json['joiningDate'];
     name = json['name'];
     picUrl = json['picUrl'];
@@ -42,8 +48,8 @@ class AccountModel {
     uid = json['uid'];
     course = json['course'];
     joiningYear = json['joiningYear'];
-    skills = List.castFrom<dynamic, dynamic>(json['skills']);
-    projects = List.castFrom<dynamic, dynamic>(json['projects']);
+    skills = List.castFrom<dynamic, SkillModel>(json['skills']);
+    projects = List.castFrom<dynamic, ProjectModel>(json['projects']);
     bio = json['bio'];
     linkedinUrl = json['linkedinUrl'];
   }
@@ -51,6 +57,7 @@ class AccountModel {
   Map<String, dynamic> toJson() {
     final data = <String, dynamic>{};
     data['id'] = id;
+    data['leetUsername'] = leetUsername;
     data['name'] = name;
     data['picUrl'] = picUrl;
     data['email'] = email;
@@ -64,5 +71,37 @@ class AccountModel {
     data['linkedinUrl'] = linkedinUrl;
     data['joiningDate'] = joiningDate;
     return data;
+  }
+
+  AccountModel.demo() {
+    id = "1234";
+    name = "Suraj Kiran";
+    picUrl = kTestImgUrl;
+    email = "test@gmail.com";
+    dob = DateTime.now().millisecondsSinceEpoch;
+    uid = "22bae343541";
+    course = "cse";
+    joiningYear = 2022;
+    skills = [
+      SkillModel(title: 'c'),
+      SkillModel(title: 'c++'),
+      SkillModel(title: 'python'),
+      SkillModel(title: 'flutter'),
+    ];
+    projects = [
+      ProjectModel(
+          title: "title thie;aie ioeuiheaslui easuieuldu e",
+          desc: "desc",
+          skill: [SkillModel(title: "c")],
+          url: "url"),
+      ProjectModel(
+          title: "title dlfa oeauhei 23873beq87 873q",
+          desc: "desc",
+          skill: [SkillModel(title: "c")],
+          url: "url"),
+    ];
+    bio = "this is a test account";
+    linkedinUrl = "https://www.google.com";
+    joiningDate = Timestamp.now();
   }
 }

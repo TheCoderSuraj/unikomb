@@ -1,3 +1,5 @@
+import 'package:unikomb/core/auth/models/skill_model.dart';
+
 class ProjectModel {
   ProjectModel({
     required this.title,
@@ -8,7 +10,7 @@ class ProjectModel {
   late String title;
   late String desc;
   late String url;
-  List<String> skill = [];
+  List<SkillModel> skill = [];
 
   ProjectModel.fromJson(Map<String, dynamic> json) {
     title = json['title'];

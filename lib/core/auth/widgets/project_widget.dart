@@ -28,7 +28,8 @@ class ProjectWidget extends StatelessWidget {
             alignment: Alignment.centerLeft,
             child: Wrap(
               alignment: WrapAlignment.start,
-              children: project.skill.map((e) => Chip(label: Text(e))).toList(),
+              children:
+                  project.skill.map((e) => Chip(label: Text(e.title))).toList(),
             ),
           ),
           Text(project.desc),
