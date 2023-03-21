@@ -52,6 +52,9 @@ In summary, this project is important because it can help to address the barrier
 
 ## Further Improvements
 >> NLP based bubble formation in doubt part of the communities
->> Personalized Helping Material according to requirement of students 
+
+>> Personalized Helping Material according to requirement of students
+
 >> Building a credible mechanism through industry tie-ups
+
 >> Rewards based on credibilty to top contributors
