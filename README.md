@@ -41,7 +41,7 @@ In summary, this project is important because it can help to address the barrier
 
 >> Resume Build Up by Skill based projects
 
->> Network with seniors
+>> Network with seniors and Alumini 
 
 >> Endorsements for Contributors
 
@@ -57,4 +57,4 @@ In summary, this project is important because it can help to address the barrier
 
 >> Building a credible mechanism through industry tie-ups
 
->> Rewards based on credibilty to top contributors
+>> Rewards for to top contributors
